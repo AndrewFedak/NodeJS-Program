@@ -38,7 +38,7 @@ function getConfigBasedOnOS() {
             }
         }
     } else {
-        return null;
+        throw new Error('Not supported OS');
     }
 }
 
