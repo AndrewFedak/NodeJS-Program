@@ -45,7 +45,7 @@ function getConfigBasedOnOS() {
 function logActivityInit() {
     const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-    const logPeriod = 10 * 1000 // Once per minute program appends the output to the log file
+    const logPeriod = 60 * 1000 // Once per minute program appends the output to the log file
     let lastTimeLogged = Date.now() - logPeriod
 
     return function (processInfo) {
