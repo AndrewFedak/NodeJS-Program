@@ -27,7 +27,7 @@ const withTime = new WithTime();
 
 withTime.on('begin', () => console.log('About to execute'));
 withTime.on('end', () => console.log('Done with execute'));
-withTime.on('data', (data) => console.log('Data:', data));
+console.log(withTime.rawListeners("end"));
 
 withTime.execute(async () => {
     return new Promise((resolve, reject) => {
