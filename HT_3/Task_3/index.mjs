@@ -6,7 +6,7 @@ import { pipeline } from 'node:stream'
 const csvFilePath = './csvdirectory/csvfile.csv';
 const txtFilePath = './csvdirectory/output.txt';
 
-const csvToJsonStream = csvtojson({ headers: ['Book', 'Author', 'Amount', 'Price'] });
+const csvToJsonStream = csvtojson({ headers: ['book', 'author', 'amount', 'price'], ignoreColumns: /Amount/ig });
 
 const readStream = fs.createReadStream(csvFilePath);
 const writeStream = fs.createWriteStream(txtFilePath);
@@ -16,7 +16,7 @@ pipeline(
     csvToJsonStream,
     writeStream,
     (err) => {
-        if(err) {
+        if (err) {
             console.log(`Pipeline failed: ${err}`)
         }
     }
