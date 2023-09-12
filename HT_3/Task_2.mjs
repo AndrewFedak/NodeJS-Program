@@ -29,7 +29,7 @@ withTime.on('begin', () => console.log('About to execute'));
 withTime.on('end', () => console.log('Done with execute'));
 console.log(withTime.rawListeners("end"));
 
-withTime.execute(async () => {
+withTime.execute(() => {
     return new Promise((resolve, reject) => {
         https.get('https://jsonplaceholder.typicode.com/posts/1', (res) => {
             const { statusCode } = res;

@@ -1,3 +1,5 @@
+import { EventEmitter } from './customer-em.mjs'
+
 const myEmitter = new EventEmitter();
 
 function c1() {
