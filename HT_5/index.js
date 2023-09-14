@@ -1,9 +1,24 @@
 const { HttpServer } = require('./custom-http-wrapper')
 
-const app = new HttpServer()
+const { UsersController } = require('./users/users.controller')
+const { UsersService } = require('./users/users.service')
+const { UsersRepository } = require('./users/users.repository')
 
-app.get('/hello-world', (req, res) => {
-    res.status(201).json(req.body)
-})
 
-app.listen(3000)
+function bootstrap() {
+    const PORT = 3000
+    const app = new HttpServer()
+
+    const localDB = require('./db/index')
+
+    const usersRepository = new UsersRepository(localDB)
+    const usersService = new UsersService(usersRepository)
+    const usersController = new UsersController(usersService)
+    
+    usersController.init(app)
+    
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    })
+}
+bootstrap()
