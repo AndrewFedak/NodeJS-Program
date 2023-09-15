@@ -12,7 +12,7 @@ export class Links {
     }
     mapLinksToHateoasFormat(links) {
         Object.entries(links).forEach(([linkName, href]) => {
-            this._links[linkName] = { href }
+            this.links[linkName] = { href }
         })
     }
 }
