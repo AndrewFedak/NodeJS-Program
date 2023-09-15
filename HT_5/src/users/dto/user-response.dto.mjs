@@ -1,4 +1,4 @@
-class UserResponseDto {
+export class UserResponseDto {
     constructor(user) {
         this.id = user.id
         this.name = user.name
@@ -13,5 +13,3 @@ class UserResponseDto {
         return domainUsers.map(UserResponseDto.from)
     }
 }
-
-module.exports.UserResponseDto = UserResponseDto

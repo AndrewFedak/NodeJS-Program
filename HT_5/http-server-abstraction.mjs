@@ -1,25 +1,26 @@
-const http = require('http');
-const url = require('url');
+import http from 'node:http'
+import url from 'node:url'
 
-class HttpServer {
+import { exceptionFilter } from './src/exceptions/exception-filter.mjs';
+
+export class HttpServer {
     routes = [];
 
     listen(port, callback) {
-        const server = http.createServer((req, res) => {
-            try {
-                this.prepareRes(res)
+        const server = http.createServer(async (req, res) => {
+            this.prepareRes(res)
 
-                const { pathname, query } = url.parse(req.url, true);
-                
-                const routeHandler = this.getRouteHandler({ method: req.method, route: pathname })
+            const { pathname, query } = url.parse(req.url, true);
 
-                req.query = query
-                req.params = this.retrieveParamsFromRouteReq(pathname, routeHandler.route)
-
-                routeHandler.callback(req, res)
-            } catch (e) {
-                res.status(500).send(e.message);;
+            const routeHandler = this.getRouteHandler({ method: req.method, route: pathname })
+            if (!routeHandler) {
+                return res.status(404).send('Route not found')
             }
+
+            req.query = query
+            req.params = this.retrieveParamsFromRouteReq(pathname, routeHandler.route)
+
+            routeHandler.callback(req, res)
         });
 
         server.listen(port, callback);
@@ -29,13 +30,19 @@ class HttpServer {
             res.statusCode = statusCode;
             return res
         }
+        res.cache = function ({ maxAge }) {
+            return res.setHeader('Cache-Control', `max-age=${maxAge}`);
+        }
         res.json = function (data) {
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(data));
+            const resData = JSON.stringify({ data })
+            res.setHeader('Content-Type', 'application/json').end(resData);
+        }
+        res.sendError = function (error) {
+            const errData = JSON.stringify({ error })
+            res.setHeader('Content-Type', 'application/json').end(errData);
         }
         res.send = function (data) {
-            res.setHeader('Content-Type', 'text/plain');
-            res.end(data);
+            res.setHeader('Content-Type', 'text/plain').end(data);
         }
     }
     get(route, callback) {
@@ -44,8 +51,8 @@ class HttpServer {
     post(route, callback) {
         this.saveRouteHandler('POST', route, callback)
     }
-    update(route, callback) {
-        this.saveRouteHandler('UPDATE', route, callback)
+    patch(route, callback) {
+        this.saveRouteHandler('PATCH', route, callback)
     }
     delete(route, callback) {
         this.saveRouteHandler('DELETE', route, callback)
@@ -60,22 +67,20 @@ class HttpServer {
                     body += chunk;
                 });
                 req.on('end', () => {
-                    req.body = body && JSON.parse(body)
-                    callback(req, res)
+                    try {
+                        req.body = body && JSON.parse(body)
+                        callback(req, res)
+                    } catch (err) {
+                        exceptionFilter(err, res)
+                    }
                 });
             },
         })
     }
     getRouteHandler({ method, route }) {
-        const routeHandler = this.routes.find((routeHandler) => {
+        return this.routes.find((routeHandler) => {
             return routeHandler.method === method && this.matchRoute(route, routeHandler.route)
         })
-
-        if (!routeHandler) {
-            throw new Error('Route not found')
-        }
-
-        return routeHandler
     }
     matchRoute(reqRoute, savedRoute) {
         const reqNestedRoutes = this.routeToNestedRoutes(reqRoute)
@@ -123,8 +128,4 @@ class HttpServer {
     getParamNameFromNestedRoute(nestedRoute) {
         return nestedRoute.replace(':', '')
     }
-}
-
-module.exports = {
-    HttpServer
 }

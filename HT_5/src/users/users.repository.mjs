@@ -1,6 +1,6 @@
-const { User } = require("./entities/user")
+import { User } from "./entities/user.mjs"
 
-class UsersRepository {
+export class UsersRepository {
     constructor(dbRef) {
         this.db = dbRef
     }
@@ -17,7 +17,7 @@ class UsersRepository {
     update(id, updatedUser) {
         let affectedRows = 0
         this.db.users = this.db.users.map((user) => {
-            if(user.id === id) {
+            if (user.id === id) {
                 affectedRows++
                 return updatedUser
             }
@@ -28,7 +28,7 @@ class UsersRepository {
     delete(id) {
         let affectedRows = 0
         this.db.users = this.db.users.filter((user) => {
-            if(user.id === id) {
+            if (user.id === id) {
                 affectedRows++
                 return false
             }
@@ -37,5 +37,3 @@ class UsersRepository {
         return affectedRows
     }
 }
-
-module.exports = { UsersRepository }
