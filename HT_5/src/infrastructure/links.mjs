@@ -5,12 +5,12 @@ export class Links {
         const hostname = req.headers.host;
         const path = req.url;
 
-        this.mapLinksToHateoas({ self: `${protocol}://${hostname}${path}`, ...links })
+        this.mapLinksToHateoasFormat({ self: `${protocol}://${hostname}${path}`, ...links })
     }
     get links() {
         return this._links
     }
-    mapLinksToHateoas(links) {
+    mapLinksToHateoasFormat(links) {
         Object.entries(links).forEach(([linkName, href]) => {
             this._links[linkName] = { href }
         })

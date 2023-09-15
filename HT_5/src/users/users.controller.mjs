@@ -26,49 +26,49 @@ export class UsersController {
     getUsers = (_req, res) => {
         const users = this.usersService.getList()
 
-        return res.json(UserResponseDto.fromEntries(users))
+        res.json(UserResponseDto.fromEntries(users))
     }
     getUser = (req, res) => {
         const user = this.usersService.get(+req.params.id)
 
-        return res.json(UserWithHobbiesLinkResponseDto.from(user, new Links(req, { hobbies: `${PROCESS_ENV.API_BASE_URL}${this.baseRoute}/${user.id}/hobbies` })))
+        res.json(UserWithHobbiesLinkResponseDto.from(user, new Links(req, { hobbies: `${PROCESS_ENV.API_BASE_URL}${this.baseRoute}/${user.id}/hobbies` })))
     }
     create = (req, res) => {
         const createUserDto = new CreateUserDto(req.body)
 
         const createdUser = this.usersService.create(createUserDto)
 
-        return res.status(201).json(UserResponseDto.from(createdUser))
+        res.status(201).json(UserResponseDto.from(createdUser))
     }
     patch = (req, res) => {
         const updateUserDto = new UpdateUserDto(req.body)
 
         const updatedUser = this.usersService.partiallyUpdate(+req.params.id, updateUserDto)
 
-        return res.json(UserResponseDto.from(updatedUser))
+        res.json(UserResponseDto.from(updatedUser))
     }
     delete = (req, res) => {
         this.usersService.delete(+req.params.id)
 
-        return res.send('Deleted')
+        res.send('Deleted')
     }
     getUserHobbies = (req, res) => {
         const hobbies = this.usersService.getUserHobbies(+req.params.id)
 
-        return res.cache({ maxAge: 5 }).json(hobbies)
+        res.cache({ maxAge: 5 }).json(hobbies)
     }
     addHobby = (req, res) => {
         const { id, name: hobbyName } = req.params
 
         this.usersService.addHobby(+id, hobbyName)
 
-        return res.status(201).send(`Hobby with name: ${hobbyName} was successfully added to User (${id})`)
+        res.status(201).send(`Hobby with name: ${hobbyName} was successfully added to User (${id})`)
     }
     deleteHobby = (req, res) => {
         const { id, name: hobbyName } = req.params
 
         this.usersService.deleteHobby(+id, hobbyName)
 
-        return res.send(`Hobby with name: ${hobbyName} was successfully deleted from User (${id})`)
+        res.send(`Hobby with name: ${hobbyName} was successfully deleted from User (${id})`)
     }
 }
