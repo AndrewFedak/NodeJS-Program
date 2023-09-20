@@ -4,11 +4,16 @@ import { checkIfTodayIsPublicHoliday, getListOfPublicHolidays, getNextPublicHoli
 
 describe('Public holidays service', () => {
     describe('getListOfPublicHolidays', () => {
-        it('should get holidays in "short" format', () => {
+        it('should get holidays in "short" format', async () => {
             const year = 2023
             const country = SUPPORTED_COUNTRIES[0]
             
-            return expect(getListOfPublicHolidays(year, country)).resolves.toBeTruthy()
+            const shortPublicHolidays = await getListOfPublicHolidays(year, country)
+            const holiday = shortPublicHolidays[0]
+            expect(holiday).toHaveProperty('name')
+            expect(holiday).toHaveProperty('date')
+            expect(holiday).toHaveProperty('localName')
+            expect(holiday).not.toHaveProperty('countryCode')
         })
     })
 
