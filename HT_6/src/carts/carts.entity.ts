@@ -9,16 +9,12 @@ export class Cart {
         public items: CartItem[],
     ) { }
 
-    async addProduct(product: Product) {
-        const item = this.findItem(product.id);
-        if(!item) {
-            this.items.push({
-                product,
-                count: 1
-            })
-        } else {
-            item.count += 1
-        }
+    updateItems(items: CartItem[]) {
+        this.items = items
+    }
+
+    updateVisibility(isDeleted: boolean) {
+        this.isDeleted = isDeleted
     }
 
     private findItem(productId: string): CartItem | undefined {
@@ -31,5 +27,9 @@ export class Cart {
 
     getItems() {
         return this.items
+    }
+
+    empty() {
+        this.items = []
     }
 }
