@@ -6,7 +6,7 @@ export const exceptionFilter = (err, res) => {
         return res.status(err.status).sendError(err)
     }
     if (err instanceof Error) {
-        res.status(HttpStatus.INTERNAL_ERROR).sendError(new HttpException(err.message))
+        return res.status(HttpStatus.INTERNAL_ERROR).sendError(new HttpException(err.message))
     }
     return res.status(HttpStatus.INTERNAL_ERROR).sendError(new HttpException())
 }
