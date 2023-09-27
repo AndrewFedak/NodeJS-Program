@@ -1,7 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
-import { IDatabase } from "./idatabase";
-
 import { Cart } from "../carts/carts.entity";
 import { Order } from "../orders/orders.entity";
 import { Product } from "../products/products.entity";
@@ -19,7 +15,14 @@ const user2 = new User('2')
 console.log('Here is a user that may be used for testing as already present cart: ', user1)
 console.log('Here is a user that may be used for testing to create cart: ', user2)
 
-export const InMemoryDB: IDatabase = {
+export interface IInMemoryDatabase {
+    users: User[],
+    products: Product[],
+    carts: Cart[],
+    orders: Order[],
+}
+
+export const InMemoryDB: IInMemoryDatabase = {
     users: [user1, user2],
     products: [product1, product2],
     carts: [cart1],

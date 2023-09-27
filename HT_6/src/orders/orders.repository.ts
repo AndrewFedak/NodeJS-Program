@@ -1,4 +1,4 @@
-import { IDatabase } from "../infrastructure/idatabase";
+import { IInMemoryDatabase } from "../infrastructure/in-memory.database";
 import { Order } from "./orders.entity";
 
 export interface IOrdersRepository {
@@ -7,7 +7,7 @@ export interface IOrdersRepository {
 
 export class OrdersRepository implements IOrdersRepository {
     constructor(
-        private _db: IDatabase
+        private _db: IInMemoryDatabase
     ) {}
     async create(order: Order): Promise<void> {
         this._db.orders.push(order)

@@ -1,4 +1,4 @@
-import { IDatabase } from "../infrastructure/idatabase";
+import { IInMemoryDatabase } from "../infrastructure/in-memory.database";
 
 import { Product } from "./products.entity";
 
@@ -9,7 +9,7 @@ export interface IProductsRepository {
 
 export class ProductsRepository implements IProductsRepository {
     constructor(
-        private _db: IDatabase
+        private _db: IInMemoryDatabase
     ) { }
     async getListOfProducts(): Promise<Product[]> {
         return this._db.products

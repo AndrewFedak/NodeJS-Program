@@ -1,4 +1,5 @@
-import { IDatabase } from "../infrastructure/idatabase";
+import { IInMemoryDatabase } from "../infrastructure/in-memory.database";
+
 import { Cart } from "./carts.entity";
 
 export interface ICartsRepository {
@@ -10,7 +11,7 @@ export interface ICartsRepository {
 
 export class CartsRepository implements ICartsRepository {
     constructor(
-        private _db: IDatabase
+        private _db: IInMemoryDatabase
     ) {}
     async createCart(cart: Cart) {
         this._db.carts.push(cart)
