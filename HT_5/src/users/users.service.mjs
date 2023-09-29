@@ -42,7 +42,7 @@ export class UsersService {
     delete(id) {
         const result = this.usersRepository.delete(id)
         if (result === 0) {
-            throw new BadRequestException('User was not deleted')
+            throw new NotFoundException('User was not deleted')
         }
 
         return true

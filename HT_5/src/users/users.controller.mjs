@@ -50,7 +50,7 @@ export class UsersController {
     delete = (req, res) => {
         this.usersService.delete(+req.params.id)
 
-        res.send('Deleted')
+        res.status(204).send('Deleted')
     }
     getUserHobbies = (req, res) => {
         const hobbies = this.usersService.getUserHobbies(+req.params.id)

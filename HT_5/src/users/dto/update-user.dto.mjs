@@ -2,7 +2,12 @@ export class UpdateUserDto {
     constructor(body) {
         this.validatePartial(body)
     }
-    validatePartial({ name, email }) {
+    validatePartial(body) {
+        if(body) {
+            return null;
+        }
+
+        const { name, email } = body
         if (name) {
             this.name = name
         }
