@@ -9,8 +9,14 @@ It proves that encapsulatino, separation of concerns, single reponsibility and o
 will leave codebase maintainable (readable, testable, modifiable) through development.
 
 By applying Layer architecture and following rule to not have circular dependencies and depend only on Domain, as in HT_6 + HT_7 showed,
-will help as to not be scared of upper level changes thus, at the end, those changes won't affect any Domain functionality if Layers boundaries are not crossed
+will help as to not be scared of upper level changes thus, at the end, those changes won't affect any Domain functionality if Layers boundaries are not violated
 
-Also, explicit contracts as interfaces and ubiquitous language of terms across codebase, will allow our application to behave same and provide same business functional requirements, neglecting some upper layer changes and concers, thus we will be more flexible
+Also, explicit contracts as interfaces and ubiquitous language of terms across codebase, will allow our application to behave same and provide same business functional requirements, being not affected by some upper layer changes and concers, thus we will be more assured that any changes on upper level won't affect business implenetation in Domain
+
+
+But we need to keep in mind, and also by my personal experience with that task, following such Domain Model Pattern could be big time consuming task, so we have to define
+parts of applciation that really will make use of it in a future. Functional components in "core domains" of application, that really will give value should be developed 
+in that way. 
+Some "generic" or "supportive" stuff may be developed in a "transaction script" or "anemic model" patterns to provide value in-place 
 
 Infrustructure -> Application Service -> Domain
