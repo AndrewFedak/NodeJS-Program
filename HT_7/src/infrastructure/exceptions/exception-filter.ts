@@ -5,7 +5,8 @@ import { HttpStatus } from './http-statuses'
 
 import { ResponseDataAndError } from '../response-data-and-error'
 
-export const ExceptionFilter: ErrorRequestHandler = (err, req, res) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const ExceptionFilter: ErrorRequestHandler = (err, req, res, _next) => {
   if (err instanceof HttpException) {
     res.status(err.status).json(ResponseDataAndError.format(null, err))
   } else if (err instanceof Error) {

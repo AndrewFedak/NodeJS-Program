@@ -2,27 +2,32 @@ import { EntityManager } from '@mikro-orm/core'
 import { SqlEntityRepository } from '@mikro-orm/postgresql'
 
 import { CartDataModel } from '@config/data-models/cart/cart'
+import { CartProductDataModel } from '@src/config/data-models/cart/cart-product'
 
 import { Cart } from './carts.entity'
-import { UserDataModel } from '@src/config/data-models/user'
 
 export type ICartsRepository = {
   createCart(cart: Cart): Promise<void>
   getCartByCartId(cartId: string): Promise<Cart | null>
   getCartByUserId(userId: string): Promise<Cart | null>
-  updateCart(updatedCart: Cart): Promise<void>
+  updateCartItems(updatedCart: Cart): Promise<void>
 }
 
 export class CartsRepository implements ICartsRepository {
   private _ormCartsRepository: SqlEntityRepository<CartDataModel>
-  private _ormUsersRepository: SqlEntityRepository<UserDataModel>
+  private _ormCartsProductRepository: SqlEntityRepository<CartProductDataModel>
+
   constructor(_em: EntityManager) {
     this._ormCartsRepository = _em.getRepository(CartDataModel)
-    this._ormUsersRepository = _em.getRepository(UserDataModel)
+    this._ormCartsProductRepository = _em.getRepository(CartProductDataModel)
   }
+
   async createCart(cart: Cart) {
-    await this._ormCartsRepository.nativeInsert(CartDataModel.fromDomain(cart))
+    const cartModel = CartDataModel.fromDomain(cart)
+    await this._ormCartsRepository.upsert(cartModel)
+    await this._ormCartsProductRepository.upsertMany(cartModel.items.getItems())
   }
+
   async getCartByCartId(cartId: string) {
     const cartModel = await this._ormCartsRepository.findOne({
       id: cartId,
@@ -33,6 +38,7 @@ export class CartsRepository implements ICartsRepository {
     }
     return CartDataModel.toDomain(cartModel)
   }
+
   async getCartByUserId(userId: string) {
     const cartModel = await this._ormCartsRepository.findOne({
       userId,
@@ -43,7 +49,14 @@ export class CartsRepository implements ICartsRepository {
     }
     return CartDataModel.toDomain(cartModel)
   }
-  async updateCart(): Promise<void> {
-    this._ormCartsRepository.upsert
+
+  async updateCartItems(cart: Cart): Promise<void> {
+    const cartDataModel = CartDataModel.fromDomain(cart)
+    await this._ormCartsProductRepository.nativeDelete({
+      cart: cartDataModel,
+    })
+    await this._ormCartsProductRepository.upsertMany(
+      cartDataModel.items.getItems(),
+    )
   }
 }

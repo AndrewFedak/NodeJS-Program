@@ -11,7 +11,7 @@ export class OrderDeliveryDataModel {
 
   @OneToOne({
     entity: () => OrderDataModel,
-    mappedBy: (order) => order.delivery,
+    mappedBy: order => order.delivery,
     orphanRemoval: true,
   })
   order!: OrderDataModel
@@ -28,7 +28,11 @@ export class OrderDeliveryDataModel {
     this.address = address
   }
 
-  static toDomain({ id, type, address }: Loaded<OrderDeliveryDataModel>): Delivery {
+  static toDomain({
+    id,
+    type,
+    address,
+  }: Loaded<OrderDeliveryDataModel>): Delivery {
     return new Delivery(id, type, address)
   }
 

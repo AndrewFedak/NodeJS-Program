@@ -21,11 +21,11 @@ export class CartDataModel {
 
   // To not load WHOLE User entity, hack with adding @Property just for userId will work
   // to write record without passing unnessesary COMPLETE user
+  // *NOTE: didn't work for productId in CartProductDataModel for some reasons. To be discovered 😕
   @Property()
   userId: string
   @ManyToOne({
     entity: () => UserDataModel,
-    joinColumn: 'user_id',
   })
   user!: UserDataModel
   //

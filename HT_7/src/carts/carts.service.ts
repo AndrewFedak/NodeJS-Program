@@ -51,7 +51,7 @@ export class CartsService {
     cart.updateItems(updateCartDto.items)
     cart.updateVisibility(updateCartDto.isDeleted)
 
-    this._cartsRepository.updateCart(cart)
+    await this._cartsRepository.updateCartItems(cart)
 
     return cart
   }
@@ -64,7 +64,7 @@ export class CartsService {
 
     cart.empty()
 
-    await this._cartsRepository.updateCart(cart)
+    await this._cartsRepository.updateCartItems(cart)
   }
 
   async checkout(userId: string): Promise<Order> {

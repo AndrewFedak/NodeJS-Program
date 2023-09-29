@@ -10,6 +10,8 @@ import { CartProductDataModel } from './data-models/cart/cart-product'
 
 import { OrderDataModel } from './data-models/order/order'
 import { OrderProductDataModel } from './data-models/order/order-product'
+import { OrderPaymentDataModel } from './data-models/order/order-payment'
+import { OrderDeliveryDataModel } from './data-models/order/order-delivery'
 
 import { Cart } from '@src/carts/carts.entity'
 
@@ -20,16 +22,13 @@ import { Delivery } from '@src/orders/delivery'
 import { Product } from '@src/products/products.entity'
 
 import { User } from '@src/users/users.entity'
-import { OrderPaymentDataModel } from './data-models/order/order-payment'
-import { OrderDeliveryDataModel } from './data-models/order/order-delivery'
 
-const FillDB =
-  (em: EntityManager): RequestHandler =>
-  async (req, res) => {
+const FillDB = function (em: EntityManager): RequestHandler {
+  return async (req, res) => {
     const usersRepository = em.getRepository(UserDataModel)
-    
+
     const productsRepository = em.getRepository(ProductDataModel)
-    
+
     const cartsRepository = em.getRepository(CartDataModel)
     const cartsProductRepository = em.getRepository(CartProductDataModel)
 
@@ -65,14 +64,14 @@ const FillDB =
       new Delivery('1', 'courier', 'smth'),
       'created',
     )
-
-    await ordersDeliveryRepository.upsert(OrderDeliveryDataModel.fromDomain(order1.delivery))
-    await ordersPaymentRepository.upsert(OrderPaymentDataModel.fromDomain(order1.payment))
-
     const orderModel = OrderDataModel.fromDomain(order1)
+
+    await ordersDeliveryRepository.upsert(orderModel.delivery)
+    await ordersPaymentRepository.upsert(orderModel.payment)
     await ordersRepository.upsert(orderModel)
     await ordersProductRepository.upsertMany(orderModel.items.getItems())
 
     res.send(200)
   }
+}
 export default FillDB

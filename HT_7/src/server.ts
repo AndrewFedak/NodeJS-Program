@@ -46,9 +46,9 @@ async function bootstrap() {
   CartsController.init(cartsService, router)
   ProductsController.init(productsService, router)
 
-  app.get('/', (req, res) => res.send(200))
   app.use('/api', router)
   app.use(ExceptionFilter)
+
   const port = process.env.PORT
   app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`)

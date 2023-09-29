@@ -11,7 +11,7 @@ export class OrderPaymentDataModel {
 
   @OneToOne({
     entity: () => OrderDataModel,
-    mappedBy: (order) => order.payment,   // On the inversed (that) side we define it with mappedBy attribute pointing back to the owner
+    mappedBy: order => order.payment, // On the inversed (that) side we define it with mappedBy attribute pointing back to the owner
     orphanRemoval: true,
   })
   order!: OrderDataModel
@@ -40,7 +40,7 @@ export class OrderPaymentDataModel {
     id,
     type,
     address,
-    creditCard
+    creditCard,
   }: Loaded<OrderPaymentDataModel>): Payment {
     return new Payment(id, type, address, creditCard)
   }

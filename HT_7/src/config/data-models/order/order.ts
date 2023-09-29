@@ -34,13 +34,13 @@ export class OrderDataModel {
 
   @OneToOne({
     entity: () => OrderPaymentDataModel,
-    inversedBy: (payment) => payment.order,                    
+    inversedBy: payment => payment.order,
   })
   payment: OrderPaymentDataModel
 
   @OneToOne({
     entity: () => OrderDeliveryDataModel,
-    inversedBy: (delivery) => delivery.order,          // one is owning side (where 'references are store'), (in current, delivery_id)  marked by inversedBy attribute pointing to the inverse side.      
+    inversedBy: delivery => delivery.order, // one is owning side (where 'references are store'), (in current, delivery_id)  marked by inversedBy attribute pointing to the inverse side.
   })
   delivery: OrderDeliveryDataModel
 

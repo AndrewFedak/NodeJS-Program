@@ -1,7 +1,5 @@
 {
-  "namespaces": [
-    "public"
-  ],
+  "namespaces": ["public"],
   "name": "public",
   "tables": [
     {
@@ -39,9 +37,7 @@
       "indexes": [
         {
           "keyName": "order_delivery_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -94,9 +90,7 @@
       "indexes": [
         {
           "keyName": "order_payment_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -150,10 +144,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "enumItems": [
-            "created",
-            "completed"
-          ],
+          "enumItems": ["created", "completed"],
           "mappedType": "enum"
         },
         "payment_id": {
@@ -188,18 +179,14 @@
       "schema": "public",
       "indexes": [
         {
-          "columnNames": [
-            "payment_id"
-          ],
+          "columnNames": ["payment_id"],
           "composite": false,
           "keyName": "order_data_model_payment_id_unique",
           "primary": false,
           "unique": true
         },
         {
-          "columnNames": [
-            "delivery_id"
-          ],
+          "columnNames": ["delivery_id"],
           "composite": false,
           "keyName": "order_data_model_delivery_id_unique",
           "primary": false,
@@ -207,9 +194,7 @@
         },
         {
           "keyName": "order_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -219,25 +204,17 @@
       "foreignKeys": {
         "order_data_model_payment_id_foreign": {
           "constraintName": "order_data_model_payment_id_foreign",
-          "columnNames": [
-            "payment_id"
-          ],
+          "columnNames": ["payment_id"],
           "localTableName": "public.order_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.order_payment_data_model",
           "updateRule": "cascade"
         },
         "order_data_model_delivery_id_foreign": {
           "constraintName": "order_data_model_delivery_id_foreign",
-          "columnNames": [
-            "delivery_id"
-          ],
+          "columnNames": ["delivery_id"],
           "localTableName": "public.order_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.order_delivery_data_model",
           "updateRule": "cascade"
         }
@@ -314,19 +291,14 @@
       "indexes": [
         {
           "keyName": "order_product_data_model_order_id_product_id_unique",
-          "columnNames": [
-            "order_id",
-            "product_id"
-          ],
+          "columnNames": ["order_id", "product_id"],
           "composite": true,
           "primary": false,
           "unique": true
         },
         {
           "keyName": "order_product_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -336,13 +308,9 @@
       "foreignKeys": {
         "order_product_data_model_order_id_foreign": {
           "constraintName": "order_product_data_model_order_id_foreign",
-          "columnNames": [
-            "order_id"
-          ],
+          "columnNames": ["order_id"],
           "localTableName": "public.order_product_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.order_data_model",
           "updateRule": "cascade"
         }
@@ -392,9 +360,7 @@
       "indexes": [
         {
           "keyName": "product_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -420,9 +386,7 @@
       "indexes": [
         {
           "keyName": "user_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -466,9 +430,7 @@
       "indexes": [
         {
           "keyName": "cart_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -478,13 +440,9 @@
       "foreignKeys": {
         "cart_data_model_user_id_foreign": {
           "constraintName": "cart_data_model_user_id_foreign",
-          "columnNames": [
-            "user_id"
-          ],
+          "columnNames": ["user_id"],
           "localTableName": "public.cart_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.user_data_model",
           "updateRule": "cascade"
         }
@@ -534,19 +492,14 @@
       "indexes": [
         {
           "keyName": "cart_product_data_model_cart_id_product_id_unique",
-          "columnNames": [
-            "cart_id",
-            "product_id"
-          ],
+          "columnNames": ["cart_id", "product_id"],
           "composite": true,
           "primary": false,
           "unique": true
         },
         {
           "keyName": "cart_product_data_model_pkey",
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "composite": false,
           "primary": true,
           "unique": true
@@ -556,25 +509,17 @@
       "foreignKeys": {
         "cart_product_data_model_cart_id_foreign": {
           "constraintName": "cart_product_data_model_cart_id_foreign",
-          "columnNames": [
-            "cart_id"
-          ],
+          "columnNames": ["cart_id"],
           "localTableName": "public.cart_product_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.cart_data_model",
           "updateRule": "cascade"
         },
         "cart_product_data_model_product_id_foreign": {
           "constraintName": "cart_product_data_model_product_id_foreign",
-          "columnNames": [
-            "product_id"
-          ],
+          "columnNames": ["product_id"],
           "localTableName": "public.cart_product_data_model",
-          "referencedColumnNames": [
-            "id"
-          ],
+          "referencedColumnNames": ["id"],
           "referencedTableName": "public.product_data_model",
           "updateRule": "cascade"
         }

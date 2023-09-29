@@ -14,6 +14,31 @@ import { ProductDataModel } from '@config/data-models/product'
 
 import { CartDataModel } from './cart'
 
+// Referenced Entity is not fully loaded by default. Just PrimaryKey for reference is.
+
+// @Entity()
+// export class Book {
+
+//   @PrimaryKey()
+//   id!: number;
+
+// To load it, we may use eager: true, to let ORM know to load Entity fully on-request (https://mikro-orm.io/docs/type-safe-relations)
+// Otherwise, we may load it whenever we want by, i.e of previous (await book1.author.load())
+// Without eager:             With eager:
+//   "author" {                 "author": {
+//      id: "3"                    "id": "3",
+//    }                            "name": "Product 1",
+//                                 "age": "Product 1 Description",
+//                               }
+//   @ManyToOne()               @ManyToOne({eager: true})
+//   author!: Author;           author!: Author;
+// }
+
+// const book = await em.findOne(Book, 1);
+// console.log(book.author instanceof Author); // true
+// console.log(wrap(book.author).isInitialized()); // false
+// console.log(book.author.name); // undefined as `Author` is not loaded yet
+
 @Entity()
 @Unique({ properties: ['cart', 'product'] })
 export class CartProductDataModel {
@@ -27,6 +52,7 @@ export class CartProductDataModel {
 
   @ManyToOne({
     entity: () => ProductDataModel,
+    eager: true,
   })
   product!: ProductDataModel
 
