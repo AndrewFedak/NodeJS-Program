@@ -15,6 +15,107 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "type": {
+          "name": "type",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        }
+      },
+      "name": "order_delivery_data_model",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "order_delivery_data_model_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "credit_card": {
+          "name": "credit_card",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        }
+      },
+      "name": "order_payment_data_model",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "order_payment_data_model_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "cart_id": {
           "name": "cart_id",
           "type": "varchar(255)",
@@ -55,19 +156,55 @@
           ],
           "mappedType": "enum"
         },
-        "comments": {
-          "name": "comments",
+        "payment_id": {
+          "name": "payment_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "delivery_id": {
+          "name": "delivery_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "comments": {
+          "name": "comments",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
         }
       },
       "name": "order_data_model",
       "schema": "public",
       "indexes": [
+        {
+          "columnNames": [
+            "payment_id"
+          ],
+          "composite": false,
+          "keyName": "order_data_model_payment_id_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "delivery_id"
+          ],
+          "composite": false,
+          "keyName": "order_data_model_delivery_id_unique",
+          "primary": false,
+          "unique": true
+        },
         {
           "keyName": "order_data_model_pkey",
           "columnNames": [
@@ -79,7 +216,32 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {}
+      "foreignKeys": {
+        "order_data_model_payment_id_foreign": {
+          "constraintName": "order_data_model_payment_id_foreign",
+          "columnNames": [
+            "payment_id"
+          ],
+          "localTableName": "public.order_data_model",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.order_payment_data_model",
+          "updateRule": "cascade"
+        },
+        "order_data_model_delivery_id_foreign": {
+          "constraintName": "order_data_model_delivery_id_foreign",
+          "columnNames": [
+            "delivery_id"
+          ],
+          "localTableName": "public.order_data_model",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.order_delivery_data_model",
+          "updateRule": "cascade"
+        }
+      }
     },
     {
       "columns": {
@@ -92,8 +254,8 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "order_id_id": {
-          "name": "order_id_id",
+        "order_id": {
+          "name": "order_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -151,9 +313,9 @@
       "schema": "public",
       "indexes": [
         {
-          "keyName": "order_product_data_model_order_id_id_product_id_unique",
+          "keyName": "order_product_data_model_order_id_product_id_unique",
           "columnNames": [
-            "order_id_id",
+            "order_id",
             "product_id"
           ],
           "composite": true,
@@ -172,10 +334,10 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "order_product_data_model_order_id_id_foreign": {
-          "constraintName": "order_product_data_model_order_id_id_foreign",
+        "order_product_data_model_order_id_foreign": {
+          "constraintName": "order_product_data_model_order_id_foreign",
           "columnNames": [
-            "order_id_id"
+            "order_id"
           ],
           "localTableName": "public.order_product_data_model",
           "referencedColumnNames": [

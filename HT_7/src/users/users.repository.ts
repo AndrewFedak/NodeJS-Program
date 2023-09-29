@@ -1,28 +1,26 @@
-import { EntityManager } from "@mikro-orm/core";
-import { SqlEntityRepository } from "@mikro-orm/postgresql";
+import { EntityManager } from '@mikro-orm/core'
+import { SqlEntityRepository } from '@mikro-orm/postgresql'
 
-import { UserDataModel } from "../config/data-models/user";
+import { UserDataModel } from '../config/data-models/user'
 
-import { User } from "./users.entity";
+import { User } from './users.entity'
 
-export interface IUsersRepository {
-    getUserById(userId: string): Promise<User | null>
+export type IUsersRepository = {
+  getUserById(userId: string): Promise<User | null>
 }
 
 export class UsersRepository implements IUsersRepository {
-    private _ormUsersRepository: SqlEntityRepository<UserDataModel>
-    constructor(
-        _em: EntityManager
-    ) {
-        this._ormUsersRepository = _em.getRepository(UserDataModel)
+  private _ormUsersRepository: SqlEntityRepository<UserDataModel>
+  constructor(_em: EntityManager) {
+    this._ormUsersRepository = _em.getRepository(UserDataModel)
+  }
+  async getUserById(userId: string): Promise<User | null> {
+    const userDataModel = await this._ormUsersRepository.findOne({
+      id: userId,
+    })
+    if (!userDataModel) {
+      return null
     }
-    async getUserById(userId: string): Promise<User | null> {
-        const userDataModel = await this._ormUsersRepository.findOne({
-            id: userId
-        })
-        if (!userDataModel) {
-            return null
-        }
-        return UserDataModel.toDomain(userDataModel);
-    }
+    return UserDataModel.toDomain(userDataModel)
+  }
 }

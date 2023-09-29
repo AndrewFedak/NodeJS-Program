@@ -1,7 +1,8 @@
 export class Payment {
-    constructor(
-        public type: string,
-        public address?: any,
-        public creditCard?: any
-    ) {}
+  constructor(
+    public id: string,
+    public type: string,
+    public address?: string,
+    public creditCard?: string,
+  ) {}
 }

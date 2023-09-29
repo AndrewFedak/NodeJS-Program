@@ -1,31 +1,33 @@
-import { Product } from "../products/products.entity";
-import { CartItem } from "./cart-item";
+import { CartItem } from './cart-item'
 
 export class Cart {
-    constructor(
-        public id: string,
-        public userId: string,
-        public isDeleted: boolean,
-        public items: CartItem[],
-    ) { }
+  constructor(
+    public id: string,
+    public userId: string,
+    public isDeleted: boolean,
+    public items: CartItem[],
+  ) {}
 
-    updateItems(items: CartItem[]) {
-        this.items = items
-    }
+  updateItems(items: CartItem[]) {
+    this.items = items
+  }
 
-    updateVisibility(isDeleted: boolean) {
-        this.isDeleted = isDeleted
-    }
-    
-    getTotal(): number {
-        return this.items.reduce((total, item) => total + item.product.price * item.count, 0)
-    }
+  updateVisibility(isDeleted: boolean) {
+    this.isDeleted = isDeleted
+  }
 
-    getItems() {
-        return this.items
-    }
+  getTotal(): number {
+    return this.items.reduce(
+      (total, item) => total + item.product.price * item.count,
+      0,
+    )
+  }
 
-    empty() {
-        this.items = []
-    }
+  getItems() {
+    return this.items
+  }
+
+  empty() {
+    this.items = []
+  }
 }

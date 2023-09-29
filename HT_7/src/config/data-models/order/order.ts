@@ -1,57 +1,128 @@
-import { Entity, Loaded, PrimaryKey, OneToMany, Collection, Property, Enum } from "@mikro-orm/core";
+import {
+  Entity,
+  Loaded,
+  PrimaryKey,
+  OneToMany,
+  Collection,
+  Property,
+  Enum,
+  OneToOne,
+} from '@mikro-orm/core'
 
-import { Order, ORDER_STATUS } from "@src/orders/orders.entity";
+import { Order, ORDER_STATUS } from '@src/orders/orders.entity'
 
-import { OrderProductDataModel } from "./order-product";
+import { OrderProductDataModel } from './order-product'
+import { OrderPaymentDataModel } from './order-payment'
+import { OrderDeliveryDataModel } from './order-delivery'
 
 @Entity()
 export class OrderDataModel {
-    @PrimaryKey()
-    id: string;
+  @PrimaryKey()
+  id: string
 
-    @Property()
-    cartId: string
+  @Property()
+  cartId: string
 
-    @Property()
-    userId: string
-    
-    // Order entity has copy of products. If you have only product id in order, it may lead to inconsistency. 
-    // For example, if user creates an order and after that price is changed, the order price shouldn't be changed.
-    @OneToMany({
-        entity: () => OrderProductDataModel,
-        mappedBy: (orderProduct) => orderProduct.orderId
-    })
-    items = new Collection<OrderProductDataModel>(this)
+  @Property()
+  userId: string
 
-    @Property()
-    total: number
+  @Property()
+  total: number
 
-    // @Property()
-    // payment: Payment
-    // @Property()
-    // delivery: Delivery
+  @Enum({ items: ['created', 'completed'] })
+  status: ORDER_STATUS
 
-    @Enum({ items: ['created', 'completed'] })
-    status: ORDER_STATUS
+  @OneToOne({
+    entity: () => OrderPaymentDataModel,
+    inversedBy: (payment) => payment.order,                    
+  })
+  payment: OrderPaymentDataModel
 
-    @Property()
-    comments?: string
+  @OneToOne({
+    entity: () => OrderDeliveryDataModel,
+    inversedBy: (delivery) => delivery.order,          // one is owning side (where 'references are store'), (in current, delivery_id)  marked by inversedBy attribute pointing to the inverse side.      
+  })
+  delivery: OrderDeliveryDataModel
 
-    constructor(id: string, cartId: string, userId: string, items: OrderProductDataModel[], total: number, status: ORDER_STATUS, comments?: string) {
-        this.id = id;
-        this.cartId = cartId;
-        this.userId = userId;
-        this.items = new Collection<OrderProductDataModel>(this, items);
-        this.total = total;
-        this.status = status;
-        this.comments = comments;
-    }
+  @Property({
+    nullable: true,
+  })
+  comments?: string
+  // Order entity has copy of products. If you have only product id in order, it may lead to inconsistency.
+  // For example, if user creates an order and after that price is changed, the order price shouldn't be changed.
+  @OneToMany({
+    entity: () => OrderProductDataModel,
+    mappedBy: orderProduct => orderProduct.order,
+    eager: true,
+  })
+  items = new Collection<OrderProductDataModel>(this)
 
-    static toDomain({ id, cartId, userId, items, total, status, comments }: Loaded<OrderDataModel>): Order {
-        return new Order(id, cartId, userId, OrderProductDataModel.toDomain(items.getItems()), total, {} as Order['payment'], {} as Order['delivery'], status, comments)
-    }
+  constructor(
+    id: string,
+    cartId: string,
+    userId: string,
+    total: number,
+    status: ORDER_STATUS,
+    payment: OrderPaymentDataModel,
+    delivery: OrderDeliveryDataModel,
+    comments?: string,
+  ) {
+    this.id = id
+    this.cartId = cartId
+    this.userId = userId
+    this.total = total
+    this.status = status
+    this.payment = payment
+    this.delivery = delivery
+    this.comments = comments
+  }
 
-    static fromDomain({id: orderId, userId, cartId, items, total, status, comments}: Order): OrderDataModel {
-        return new OrderDataModel(orderId, cartId, userId, OrderProductDataModel.fromDomain(orderId, items), total, status, comments);
-    }
+  static toDomain({
+    id,
+    cartId,
+    userId,
+    items,
+    total,
+    status,
+    payment,
+    delivery,
+    comments,
+  }: Loaded<OrderDataModel>): Order {
+    return new Order(
+      id,
+      cartId,
+      userId,
+      OrderProductDataModel.toDomain(items.getItems()),
+      total,
+      OrderPaymentDataModel.toDomain(payment),
+      OrderDeliveryDataModel.toDomain(delivery),
+      status,
+      comments,
+    )
+  }
+
+  static fromDomain(order: Order): OrderDataModel {
+    const {
+      id: orderId,
+      userId,
+      cartId,
+      total,
+      status,
+      payment,
+      delivery,
+      comments,
+    } = order
+    const orderDataModel = new OrderDataModel(
+      orderId,
+      cartId,
+      userId,
+      total,
+      status,
+      OrderPaymentDataModel.fromDomain(payment),
+      OrderDeliveryDataModel.fromDomain(delivery),
+      comments,
+    )
+    orderDataModel.items.add(OrderProductDataModel.fromDomain(order))
+    return orderDataModel
+  }
 }
