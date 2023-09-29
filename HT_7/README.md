@@ -1,9 +1,9 @@
-Code base of Domain and Application Service layer is same as in HT_6
+Code base of **Domain** and **Application Service** layer is same as in HT_6
 
-Changes only been done in Persistence (underlying DB) and Infrustructure (repository implementation) layers. 
+Changes only been done in **Persistence** (underlying DB) and **Infrustructure** (repository implementation) layers. 
 
-Application (which consumes Repository interface  as explicit contract for persisting data, that is defined in Domain Layer, thus App Service -> Domain) 
-and Domain (that manages Aggregates, Entities, etc, thus delivers business value) layers were left unchanged 
+**Application** (which consumes Repository interface  as explicit contract for persisting data, that is defined in Domain Layer, thus App Service -> Domain) 
+and **Domain** (that manages *Aggregates*, *Entities*, etc, thus delivers business value) layers were left unchanged 
 
 It proves that encapsulatino, separation of concerns, single reponsibility and other Clean Code/Architecture principles
 will leave codebase maintainable (readable, testable, modifiable) through development.
@@ -11,12 +11,15 @@ will leave codebase maintainable (readable, testable, modifiable) through develo
 By applying Layer architecture and following rule to not have circular dependencies and depend only on Domain, as in HT_6 + HT_7 showed,
 will help as to not be scared of upper level changes thus, at the end, those changes won't affect any Domain functionality if Layers boundaries are not violated
 
-Also, explicit contracts as interfaces and ubiquitous language of terms across codebase, will allow our application to behave same and provide same business functional requirements, being not affected by some upper layer changes and concers, thus we will be more assured that any changes on upper level won't affect business implenetation in Domain
+Also, explicit contracts as interfaces and ubiquitous language of terms across codebase, will allow our application to behave same and provide same business functional requirements, being not affected by some upper layer changes and concers, thus we will be more assured that any changes on upper level won't affect business implenetation in **Domain**
 
 
-But we need to keep in mind, and also by my personal experience with that task, following such Domain Model Pattern could be big time consuming task, so we have to define
-parts of applciation that really will make use of it in a future. Functional components in "core domains" of application, that really will give value should be developed 
-in that way. 
-Some "generic" or "supportive" stuff may be developed in a "transaction script" or "anemic model" patterns to provide value in-place 
+> But we need to keep in mind, and also by my personal experience with that task, following such Domain Model Pattern could be big time consuming task, so we have to define
+> parts of applciation that really will make use of ready-to-extend, flexible, readable and testable code in a future. 
+> Functional components in **"core subdomains"v** of application, that really will provide value to business should be developed in that way. 
 
-Infrustructure -> Application Service -> Domain
+Some **"generic"** or **"supportive"** subdomains may be developed in a **"transaction script"** or **"anemic model"** patterns to provide value in-place 
+
+![Clear Architecture!](https://codeopinion.com/wp-content/uploads/2023/02/image-1.png "San Juan Mountains")
+
+Presentation -> Infrustructure/Application Service -> Domain
