@@ -40,6 +40,24 @@ export class CartDataModel {
   })
   items = new Collection<CartProductDataModel>(this)
 
+  // CartProductDataModel {
+  //   id: '6b7caea5-d839-4f00-a455-101f4a28aa40',
+  //   product: ProductDataModel {
+  //     id: '3',
+  //     title: 'Product 1',
+  //     description: 'Product 1 Description',
+  //     price: 50
+  //   },
+  //   count: 2,
+  //   cart: CartDataModel {    (here 'mappedBy' property takes a use, when fetch CartProductDataModel, cp.cart property will be filled by Cart)
+  //     items: Collection<CartProductDataModel> { '0': [CartProductDataModel], initialized: true, dirty: true },
+  //     id: '6',
+  //     userId: '1',
+  //     isDeleted: false,
+  //     user: UserDataModel { id: '1' }
+  //   }
+  // }
+
   constructor(id: string, userId: string, isDeleted: boolean) {
     this.id = id
     this.userId = userId

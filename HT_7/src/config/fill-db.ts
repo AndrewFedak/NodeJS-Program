@@ -8,16 +8,7 @@ import { ProductDataModel } from './data-models/product'
 import { CartDataModel } from './data-models/cart/cart'
 import { CartProductDataModel } from './data-models/cart/cart-product'
 
-import { OrderDataModel } from './data-models/order/order'
-import { OrderProductDataModel } from './data-models/order/order-product'
-import { OrderPaymentDataModel } from './data-models/order/order-payment'
-import { OrderDeliveryDataModel } from './data-models/order/order-delivery'
-
 import { Cart } from '@src/carts/carts.entity'
-
-import { Order } from '@src/orders/orders.entity'
-import { Payment } from '@src/orders/payment'
-import { Delivery } from '@src/orders/delivery'
 
 import { Product } from '@src/products/products.entity'
 
@@ -32,11 +23,6 @@ const FillDB = function (em: EntityManager): RequestHandler {
     const cartsRepository = em.getRepository(CartDataModel)
     const cartsProductRepository = em.getRepository(CartProductDataModel)
 
-    const ordersRepository = em.getRepository(OrderDataModel)
-    const ordersProductRepository = em.getRepository(OrderProductDataModel)
-    const ordersDeliveryRepository = em.getRepository(OrderDeliveryDataModel)
-    const ordersPaymentRepository = em.getRepository(OrderPaymentDataModel)
-
     const user1 = new User('1')
     const user2 = new User('2')
     await usersRepository.upsert(UserDataModel.fromDomain(user1))
@@ -50,26 +36,9 @@ const FillDB = function (em: EntityManager): RequestHandler {
     const cart1 = new Cart('5', user1.id, false, [
       { product: product1, count: 2 },
     ])
-    const cartModel = CartDataModel.fromDomain(cart1)
-    await cartsRepository.upsert(cartModel)
-    await cartsProductRepository.upsertMany(cartModel.items.getItems())
-
-    const order1 = new Order(
-      '6',
-      cart1.id,
-      user1.id,
-      cart1.getItems(),
-      cart1.getTotal(),
-      new Payment('1', 'card'),
-      new Delivery('1', 'courier', 'smth'),
-      'created',
-    )
-    const orderModel = OrderDataModel.fromDomain(order1)
-
-    await ordersDeliveryRepository.upsert(orderModel.delivery)
-    await ordersPaymentRepository.upsert(orderModel.payment)
-    await ordersRepository.upsert(orderModel)
-    await ordersProductRepository.upsertMany(orderModel.items.getItems())
+    const cart1Model = CartDataModel.fromDomain(cart1)
+    await cartsRepository.upsert(cart1Model)
+    await cartsProductRepository.upsertMany(cart1Model.items.getItems())
 
     res.send(200)
   }
