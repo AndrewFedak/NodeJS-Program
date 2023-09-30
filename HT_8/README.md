@@ -29,22 +29,23 @@
 
 ```csharp
   // Great code example of what was previously said
-
+public class AuctionRepository {
   public void Save(Auction auction)
   {
-    var auctionDataModel = _repoAuctions.Find(auction.Id);  // Data Model
+    var auctionDataModel = db.Auction.Find(auction.Id);     // Data Model
     var auctionSnapshot = auction.GetSnapshot()             // Domain model current state Snapshot
     Map(auctionDataModel, auctionSnapshot);                 // Map Snapshot -> Data Model (Domain -> Snapshot -> Data Model)
   }
 
   public Auction FindBy(Guid Id)
   {
-    var auctionDataModel = _repoAuctions.Find(Id);                     // Data Model
-    var auctionSnapshot = new AuctionSnapshot();                       // Domain model blank Snapshot
+    var auctionDataModel = db.Auction.Find(Id);                     // Data Model
+    var auctionSnapshot = new AuctionSnapshot();                    // Domain model blank Snapshot
 
-    auctionSnapshot.Id = auctionDataModel.Id;                          // Fill blank Snapshot with Data Model values
+    auctionSnapshot.Id = auctionDataModel.Id;                       // Fill blank Snapshot with Data Model values
     
-    var auctionDomainModel = Auction.CreateFrom(auctionSnapshot);      // Create Domain model from prefilled Snapshot (Data Model -> Snapshot -> Domain)
+    var auctionDomainModel = Auction.CreateFrom(auctionSnapshot);   // Create Domain model from prefilled Snapshot (Data Model -> Snapshot -> Domain)
     return auctionDomainModel
   }
+}
 ```
