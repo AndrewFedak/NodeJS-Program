@@ -4,8 +4,10 @@ import { Cart as CartDomain } from '@src/carts/carts.entity'
 
 import { IProduct, ProductDataModel, productSchema } from './product'
 
+// The field name _id is reserved for use as a primary key; 
+// its value must be unique in the collection, is immutable, and may be of any type other than an array.
 interface ICart {
-  _id?: string
+  _id: string
   userId: string
   isDeleted: boolean
   items: {
@@ -28,13 +30,13 @@ const cartSchema = new Schema<ICart>({
 const Cart = model<ICart>('Cart', cartSchema)
 
 export class CartDataModel extends Cart {
-  constructor(data?: ICart) {
+  constructor(data: ICart) {
     super(data)
   }
 
   static toDomain({ _id, userId, isDeleted, items }: ICart): CartDomain {
     return new CartDomain(
-      _id!,
+      _id,
       userId,
       isDeleted,
       items.map(item => ({
