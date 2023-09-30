@@ -26,11 +26,14 @@
     - will it provide a lot of value to business
     - etc 
 
+
 ```csharp
+  // Great code example of what was previously said
+
   public void Save(Auction auction)
   {
     var auctionDataModel = _repoAuctions.Find(auction.Id);  // Data Model
-    var auctionSnapshot = auction.GetSnapshot()             // Domain model current structure Snapshot
+    var auctionSnapshot = auction.GetSnapshot()             // Domain model current state Snapshot
     Map(auctionDataModel, auctionSnapshot);                 // Map Snapshot -> Data Model (Domain -> Snapshot -> Data Model)
   }
 
