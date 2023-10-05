@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+    mongo:
+        image: mongo
+        container_name: dkrcomp-mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+            - MONGO_INITDB_ROOT_PASSWORD=bdung
+        restart: always
+        ports:
+            - '27017:27017'
+        networks:
+            - my_network
+    ht-10:
+        image: ht-10:v1.0.0
+        container_name: ht-10
+        environment:
+            - MONGO_DB_NAME=nodegmp
+            - MONGO_USER=mongoadmin
+            - MONGO_PASSWORD=bdung
+            - MONGO_HOST=127.0.0.1:27017
+            - PORT=3000
+
+            - TOKEN_KEY=some_secret_key
+        restart: always
+        ports:
+            - '3000:3000'
+        depends_on:
+            - mongo
+        networks:
+            - my_network
+networks:
+    my_network:
