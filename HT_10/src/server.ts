@@ -7,6 +7,7 @@ import FillDB from './config/fill-db'
 
 import { ExceptionFilter } from './infrastructure/exceptions/exception-filter'
 import { AuthenticationMiddleware } from './infrastructure/middlewares/authentication'
+import { ApiLoggerMiddleware } from './infrastructure/api-logger'
 
 import { UsersRepository } from './users/users.repository'
 
@@ -46,15 +47,17 @@ export async function bootstrap() {
   const app = express()
 
   app.use(bodyParser.json())
+  app.use(ApiLoggerMiddleware)
+
   app.get('/init', FillDB)
 
   app.get('/health', (req, res) => {
-    const isConnected = mongoose.connection.readyState === 1;
+    const isConnected = mongoose.connection.readyState === 1
 
     if (isConnected) {
-      res.sendStatus(200);
+      res.sendStatus(200)
     } else {
-      res.sendStatus(500);
+      res.sendStatus(500)
     }
   })
 
@@ -68,5 +71,5 @@ export async function bootstrap() {
 
   app.use(ExceptionFilter)
 
-  return app
+  return { app, mongoose }
 }

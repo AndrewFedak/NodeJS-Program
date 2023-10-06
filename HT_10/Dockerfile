@@ -1,29 +1,34 @@
-# Use a lightweight base image
-FROM node:18-alpine
+# Stage 1: Build the TypeScript application
+FROM node:18 as build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
 COPY package*.json ./
 
-# Install dependencies and clean npm's cache
-RUN npm install --production && \
-    npm cache clean --force
+RUN npm install
 
-# Copy the application code
+# Copy the source code to the container 
+# (why copy after npm install, because source code will vary more frequent, 
+# thus to keep NPM cached, we will install this before COPY and will take a use of cached layer)
 COPY . .
-
-# Set the non-root user to run the application
-USER node
-
-# Expose the port that the application runs on
-EXPOSE 3000
-
-# Define a health check
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl --fail http://localhost:3000/health || exit 1
 
 RUN npm run build
 
-# Start the application
-CMD [ "npm", "run", "dev" ]
+# Stage 2: Create the production image
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy only the production-ready files from the build stage
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
+
+RUN npm i --only=production
+
+USER node
+
+EXPOSE 3000
+# Define a health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD curl --fail http://localhost:3000/health || exit 1
+
+CMD [ "npm", "run", "server" ]

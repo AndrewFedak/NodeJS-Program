@@ -1,0 +1,271 @@
+{
+  "info": {
+    "_postman_id": "b64bec4f-2d7e-4ef2-b81f-785c2649d9a4",
+    "name": "HT_10",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "17478048"
+  },
+  "item": [
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Create Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/profile/cart",
+              "host": ["{{API_URL}}"],
+              "path": ["profile", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get or Create Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/profile/cart",
+              "host": ["{{API_URL}}"],
+              "path": ["profile", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": \"48431736-3c6c-45d7-a22d-3a4afc7c43bd\",\r\n  \"items\": [\r\n    {\r\n      \"product\": {\r\n        \"id\": \"3\",\r\n        \"title\": \"Android\",\r\n        \"description\": \"Interesting book\",\r\n        \"price\": 200\r\n      },\r\n      \"count\": 3\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/profile/cart",
+              "host": ["{{API_URL}}"],
+              "path": ["profile", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Empty Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/profile/cart",
+              "host": ["{{API_URL}}"],
+              "path": ["profile", "cart"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/profile/cart/checkout",
+              "host": ["{{API_URL}}"],
+              "path": ["profile", "cart", "checkout"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Products list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImVtYWlsIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk2NjA3MTA3LCJleHAiOjE2OTY2MTQzMDd9.rimC8m2YNgQxLAWggTQczaRHmHCtW6m0gSUeZXgL4iY",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/products",
+              "host": ["{{API_URL}}"],
+              "path": ["products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Product",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlZjMzZDM1LWQyN2QtNDY2Ni1iYzJiLTVlMWFmN2I2YzcwYiIsImVtYWlsIjoiYW5kcmV3ZmVkYWwxQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjk2MTg2NTg4LCJleHAiOjE2OTYxOTM3ODh9.NSxIjKfNrBVFvqIMDG4ZpbyMyN1FFLjW37pv9KlSRiY",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{API_URL}}/products/:productId",
+              "host": ["{{API_URL}}"],
+              "path": ["products", ":productId"],
+              "variable": [
+                {
+                  "key": "productId",
+                  "value": "2112"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"andrewfedal1@gmail.com\",\r\n    \"password\": \"smth\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/register",
+              "host": ["{{API_URL}}"],
+              "path": ["register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"andrewfedal1@gmail.com\",\r\n    \"password\": \"smth\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{API_URL}}/login",
+              "host": ["{{API_URL}}"],
+              "path": ["login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Init DB",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/init",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["init"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "API_URL",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    }
+  ]
+}
