@@ -1,0 +1,45 @@
+
+stages:
+  - install_test_build_audit
+  - deploy
+
+audit:
+  image: node:latest
+  stage: install_test_build_audit
+  timeout: 5m
+  script:
+    - npm run audit
+
+install_test:
+  image: node:latest
+  stage: install_test_build_audit
+  timeout: 15m
+
+  script:
+    # Install
+    - npm install
+    # Lint test
+    - npm run lint
+    # test
+    - npm run test
+
+docker_push:
+  stage: deploy
+  image: mgit/base:kaniko-executor-debug-stable # Will ommit Docker in Docker issue
+  variables:
+    DOCKER_REGISTRY: "index.docker.io"  # Docker Hub registry
+    DOCKER_REPO_NAME: "ht-10"
+    DOCKER_REPO: "$DOCKER_HUB_USER/$DOCKER_REPO_NAME"
+  script:
+    - echo Tag name is $CI_COMMIT_TAG
+    - echo Docker repo destination is $DOCKER_REGISTRY/$DOCKER_REPO:$CI_COMMIT_TAG
+    - echo "{\"auths\":{\"${DOCKER_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${DOCKER_HUB_USER}" "${DOCKER_HUB_PASS}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - cat /kaniko/.docker/config.json
+    - /kaniko/executor 
+      --context $CI_PROJECT_DIR 
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile" 
+      --destination $DOCKER_REGISTRY/$DOCKER_REPO:$CI_COMMIT_TAG
+  rules:
+    - if: $CI_COMMIT_TAG
+  needs:
+    - job: install_test
