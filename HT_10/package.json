@@ -13,7 +13,8 @@
     "test": "echo \"Running tests\"",
     "audit": "npm audit",
     "commit": "commit",
-    "analyse": "node ./scripts/sonar.js"
+    "analyse": "node ./scripts/sonar.js",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",

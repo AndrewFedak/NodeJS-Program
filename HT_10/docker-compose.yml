@@ -12,7 +12,7 @@ services:
         networks:
             - my_network
     ht-10:
-        image: andrewfedak/ht-10:v1.0.1
+        image: andrewfedak/ht-10:v2.0.1
         container_name: ht-10
         environment:
             - MONGO_DB_NAME=nodegmp
