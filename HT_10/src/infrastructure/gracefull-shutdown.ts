@@ -22,7 +22,7 @@ export function gracefullShutdown(server: Server, mongoose: Mongoose) {
     debuglog('Received kill signal, shutting down gracefully!')
 
     mongoose.connection.close().then(() => {
-      debuglog('MongoDB connection successfully closed')
+      debuglog('MongoDB connection successfully closed!')
     })
 
     server.close(() => {
