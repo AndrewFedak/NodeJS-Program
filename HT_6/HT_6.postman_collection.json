@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "30160552-8583-416a-ac4e-911661b7aafa",
+		"name": "HT_6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17478048"
+	},
+	"item": [
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Create Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/profile/cart",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"profile",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get or Create Cart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/profile/cart",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"profile",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"5\",\r\n  \"items\": [\r\n    {\r\n      \"product\": {\r\n        \"id\": \"5c293ad0-19d0-41ee-baa3-4c648f9f7697\",\r\n        \"title\": 100,\r\n        \"description\": \"Interesting book\",\r\n        \"price\": 200\r\n      },\r\n      \"count\": 2\r\n    },\r\n    {\r\n      \"product\": {\r\n        \"id\": \"5c293ad0-19d0-41ee-baa3-4c648f9f7635\",\r\n        \"title\": \"Phone\",\r\n        \"description\": \"Interesting phone\",\r\n        \"price\": 150\r\n      },\r\n      \"count\": 3\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/profile/cart",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"profile",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/profile/cart",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"profile",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/profile/cart/checkout",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"profile",
+								"cart",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/products",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products list Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/products/:productId",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"products",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		}
+	]
+}
