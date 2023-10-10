@@ -9,8 +9,8 @@ export class Cart {
         public items: CartItem[],
     ) { }
 
-    updateItems(items: CartItem[]) {
-        this.items = items
+    updateItem(updatedItem: CartItem) {
+        this.items = this.items.map((itm) => itm.product.id === updatedItem.product.id ? updatedItem : itm)
     }
 
     updateVisibility(isDeleted: boolean) {
