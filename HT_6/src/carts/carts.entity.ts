@@ -1,4 +1,3 @@
-import { Product } from "../products/products.entity";
 import { CartItem } from "./cart-item";
 
 export class Cart {
@@ -13,6 +12,10 @@ export class Cart {
         this.items = this.items.map((itm) => itm.product.id === updatedItem.product.id ? updatedItem : itm)
     }
 
+    deleteItem(productId: string) {
+        this.items = this.items.filter((itm) => itm.product.id !== productId)
+    }
+
     updateVisibility(isDeleted: boolean) {
         this.isDeleted = isDeleted
     }
@@ -20,7 +23,7 @@ export class Cart {
     private findItem(productId: string): CartItem | undefined {
         return this.items.find(item => item.product.id === productId)
     }
-    
+
     getTotal(): number {
         return this.items.reduce((total, item) => total + item.product.price * item.count, 0)
     }

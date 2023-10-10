@@ -46,9 +46,13 @@ export class CartsService {
             throw new NotFoundException('Cart not found')
         };
 
-        const product = await this._productsRepository.getProductById(updateCartDto.productId);
-        if (product) {
-            cart.updateItem({ product, count: updateCartDto.count })
+        if(updateCartDto.count > 0) {
+            const product = await this._productsRepository.getProductById(updateCartDto.productId);
+            if (product) {
+                cart.updateItem({ product, count: updateCartDto.count })
+            }
+        } else {
+            cart.deleteItem(updateCartDto.productId)
         }
 
         await this._cartsRepository.updateCart(cart)
