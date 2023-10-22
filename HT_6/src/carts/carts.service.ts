@@ -9,9 +9,11 @@ import { IOrdersRepository } from "../orders/orders.repository";
 
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { Order } from '../orders/orders.entity';
+import { IProductsRepository } from '../products/products.repository';
 
 export class CartsService {
     constructor(
+        private _productsRepository: IProductsRepository,
         private _cartsRepository: ICartsRepository,
         private _ordersRepository: IOrdersRepository
     ) { }
@@ -38,16 +40,22 @@ export class CartsService {
         return newCart
     }
 
-    async updateCart(updateCartDto: UpdateCartDto): Promise<Cart> {
-        const cart = await this._cartsRepository.getCartByCartId(updateCartDto.id);
+    async updateCart(updateCartDto: UpdateCartDto, userId: string): Promise<Cart> {
+        const cart = await this._cartsRepository.getCartByUserId(userId);
         if (!cart) {
             throw new NotFoundException('Cart not found')
         };
 
-        cart.updateItems(updateCartDto.items)
-        cart.updateVisibility(updateCartDto.isDeleted)
+        if(updateCartDto.count > 0) {
+            const product = await this._productsRepository.getProductById(updateCartDto.productId);
+            if (product) {
+                cart.updateItem({ product, count: updateCartDto.count })
+            }
+        } else {
+            cart.deleteItem(updateCartDto.productId)
+        }
 
-        this._cartsRepository.updateCart(cart)
+        await this._cartsRepository.updateCart(cart)
 
         return cart
     }
@@ -68,7 +76,7 @@ export class CartsService {
         if (!cart) {
             throw new NotFoundException('Cart Not found')
         }
-        const order = new Order(uuid(), cart.id, userId, cart.items, cart.getTotal(), {type: 'cash'}, {type: 'courier', address: 'smth'}, 'created')
+        const order = new Order(uuid(), cart.id, userId, cart.items, cart.getTotal(), { type: 'cash' }, { type: 'courier', address: 'smth' }, 'created')
 
         await this._ordersRepository.create(order);
 

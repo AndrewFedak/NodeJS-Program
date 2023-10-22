@@ -34,7 +34,7 @@ export class CartsController {
 
     updateCart = errorWrapper(async (req, res) => {
         const updateCartDto = UpdateCartDto.validate(req.body);
-        const cart = await this._cartsService.updateCart(updateCartDto)
+        const cart = await this._cartsService.updateCart(updateCartDto, res.locals.user.id)
         res.status(200).json(ResponseDataAndError.format({
             cart,
             totalPrice: cart.getTotal()
@@ -43,7 +43,7 @@ export class CartsController {
 
     emptyCart: RequestHandler = errorWrapper(async (req, res) => {
         await this._cartsService.emptyCart(res.locals.user.id)
-        res.status(200).json(ResponseDataAndError.format({
+        res.status(204).json(ResponseDataAndError.format({
             success: true
         }))
     })

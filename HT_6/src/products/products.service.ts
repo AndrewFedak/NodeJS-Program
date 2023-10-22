@@ -7,15 +7,15 @@ import { Product } from './products.entity';
 
 export class ProductsService {
     constructor(
-        private _cardsRepository: IProductsRepository,
+        private _productsRepository: IProductsRepository,
     ) { }
 
     async getListOfProducts(): Promise<Product[]> {
-        return this._cardsRepository.getListOfProducts()
+        return this._productsRepository.getListOfProducts()
     }
 
     async getSingleProduct(productId: string): Promise<Product> {
-        const product = await this._cardsRepository.getProductById(productId);
+        const product = await this._productsRepository.getProductById(productId);
         if (!product) {
             throw new NotFoundException('No product with such id')
         }

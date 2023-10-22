@@ -1,6 +1,7 @@
 import { RequestHandler } from "express"
 
 import { UnauthorizedRequestException } from "../exceptions/unauthorized-request.exception"
+import { ForbiddenRequestException } from "../exceptions/forbidden-request.exception"
 
 import { IUsersRepository } from "../../users/users.repository"
 
@@ -17,11 +18,11 @@ export class AuthenticationMiddleware {
     authenticate: RequestHandler =  async (req, res, next) => {
         const userId = req.headers['x-user-id'] 
         if(!userId) {
-            return next(new UnauthorizedRequestException('Header x-user-id is missing or no user with such id'))
+            return next(new ForbiddenRequestException('You must be authorized user'))
         }
         const user = await this._usersRepository.getUserById(`${userId?.toString()}`)
         if(!user) {
-            return next(new UnauthorizedRequestException('Header x-user-id is missing or no user with such id'))
+            return next(new UnauthorizedRequestException('User is not authorized'))
         }
         res.locals.user = user
         next()
