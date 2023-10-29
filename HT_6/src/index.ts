@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express'
-import bodyParser from 'body-parser'
 
 import { InMemoryDB } from './infrastructure/in-memory.database';
 import { ExceptionFilter } from './infrastructure/exceptions/exception-filter';
@@ -27,11 +26,11 @@ function bootstrap() {
   const cartsRepository = new CartsRepository(InMemoryDB)
 
   const productsService = new ProductsService(productsRepository)
-  const cartsService = new CartsService(cartsRepository, ordersRepository)
+  const cartsService = new CartsService(productsRepository, cartsRepository, ordersRepository)
 
   const app: Express = express()
 
-  app.use(bodyParser.json())
+  app.use(express.json())
   app.use(AuthenticationMiddleware.init(usersRepository))
 
   const router = express.Router()

@@ -20,5 +20,6 @@ Also, explicit contracts as interfaces and ubiquitous language of domain terms a
 Some **"generic"** or **"supportive"** subdomains may be developed in a **"transaction script"** or **"anemic model"** patterns to provide value in-place 
 
 ![Clear Architecture!](https://codeopinion.com/wp-content/uploads/2023/02/image-1.png "San Juan Mountains")
+![DDD Clear Architecture!](https://cdn.hibit.dev/images/posts/2021/ddd_layers.png "DDD clear architecture")
 
 Presentation -> Infrustructure/Application Service -> Domain
